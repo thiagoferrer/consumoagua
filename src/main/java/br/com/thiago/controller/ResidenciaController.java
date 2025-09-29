@@ -1,58 +1,51 @@
 package br.com.thiago.controller;
 
-import br.com.thiago.model.Residencia;
+import br.com.thiago.controller.dto.ResidenciaRequestDTO;
+import br.com.thiago.controller.dto.ResidenciaResponseDTO;
 import br.com.thiago.service.ResidenciaService;
-import br.com.thiago.repository.ResidenciaRepository;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/residences")
+@RequestMapping("/api/residencias")
+@RequiredArgsConstructor
 public class ResidenciaController {
 
-    private final ResidenciaService service;
-    private final ResidenciaRepository repository;
+    private final ResidenciaService residenciaService;
 
-    public ResidenciaController(ResidenciaService service, ResidenciaRepository repository) {
-        this.service = service;
-        this.repository = repository;
-    }
-
-    // Criar residência
     @PostMapping
-    public ResponseEntity<Residencia> create(@RequestBody Residencia r) {
-        Residencia criada = service.create(r);
-        return ResponseEntity.ok(criada);
+    public ResponseEntity<ResidenciaResponseDTO> create(@Valid @RequestBody ResidenciaRequestDTO requestDTO) {
+        ResidenciaResponseDTO response = residenciaService.create(requestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    // Atualizar residência
     @PutMapping("/{id}")
-    public ResponseEntity<Residencia> update(@PathVariable Long id, @RequestBody Residencia r) {
-        Residencia atualizada = service.update(id, r);
-        return ResponseEntity.ok(atualizada);
+    public ResponseEntity<ResidenciaResponseDTO> update(@PathVariable Long id,
+                                                        @Valid @RequestBody ResidenciaRequestDTO requestDTO) {
+        ResidenciaResponseDTO response = residenciaService.update(id, requestDTO);
+        return ResponseEntity.ok(response);
     }
 
-    // Buscar todos
     @GetMapping
-    public ResponseEntity<List<Residencia>> getAll() {
-        List<Residencia> residencias = repository.findAll();
+    public ResponseEntity<List<ResidenciaResponseDTO>> getAll() {
+        List<ResidenciaResponseDTO> residencias = residenciaService.findAll();
         return ResponseEntity.ok(residencias);
     }
 
-    // Buscar por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Residencia> getById(@PathVariable Long id) {
-        Residencia r = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Residência não encontrada"));
-        return ResponseEntity.ok(r);
+    public ResponseEntity<ResidenciaResponseDTO> getById(@PathVariable Long id) {
+        ResidenciaResponseDTO response = residenciaService.findById(id);
+        return ResponseEntity.ok(response);
     }
 
-    // Deletar residência
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        repository.deleteById(id);
+        residenciaService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
