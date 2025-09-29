@@ -1,10 +1,5 @@
 [build]
-builder = "DOCKERFILE"
-dockerfilePath = "Dockerfile"
-
-[deploy]
-startCommand = ""
+builder = "NIXPACKS"
 
 [env]
 SPRING_PROFILES_ACTIVE = "prd"
-JAVA_OPTS = "-Xmx256m -Xms128m"
