@@ -1,9 +1,5 @@
 [build]
 builder = "NIXPACKS"
-buildCommand = "./mvnw clean package -DskipTests"
-
-[deploy]
-startCommand = "java -Dserver.port=$PORT -jar target/consumo-agua.jar"
 
 [env]
 SPRING_PROFILES_ACTIVE = "prd"
