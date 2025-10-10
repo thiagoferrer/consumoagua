@@ -80,8 +80,16 @@ mvn spring-boot:run
 
 3. **Acesse os endpoints**
 - API: http://localhost:8080
+
 - Swagger UI: http://localhost:8080/swagger-ui.html
 - H2 Console: http://localhost:8080/h2-console
+
+Interface Swagger:
+![Captura de tela_10-10-2025_172944_localhost.jpeg](../../../Users/thi-f/Downloads/Captura%20de%20tela_10-10-2025_172944_localhost.jpeg)
+Console H2 Database
+![Captura de tela_10-10-2025_17295_localhost.jpeg](../../../Users/thi-f/Downloads/Captura%20de%20tela_10-10-2025_17295_localhost.jpeg)
+Dashboard Railway
+![Captura de tela_10-10-2025_172925_railway.com.jpeg](../../../Users/thi-f/Downloads/Captura%20de%20tela_10-10-2025_172925_railway.com.jpeg)
 
 ### Configurações
 
