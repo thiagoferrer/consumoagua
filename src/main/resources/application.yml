@@ -3,6 +3,9 @@ spring:
     active: dev
   application:
     name: consumo-agua
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 ---
 spring:
@@ -30,6 +33,9 @@ spring:
         trace: false
         web-allow-others: false
 
+server:
+  port: 8080
+
 ---
 spring:
   config:
@@ -49,7 +55,22 @@ spring:
         format_sql: false
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
+server:
+  port: ${PORT:8080}
+
+# Swagger Configuration
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+    try-it-out-enabled: true
+
+# Logging Configuration
 logging:
   level:
     br.com.thiago: DEBUG
     org.hibernate.SQL: DEBUG
+    org.springframework.web: INFO

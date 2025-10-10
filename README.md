@@ -1,171 +1,180 @@
 # Consumo Água API
 
-Uma API RESTful para gerenciamento de consumo de água e cadastro de residências, desenvolvida em Java com Spring Boot.
+API para gerenciamento de consumo de água residencial com integração de endereços via ViaCEP.
 
-## 📋 Sobre o Projeto
+## 📋 Descrição do Projeto
 
-Esta aplicação fornece endpoints para:
-- Cadastro e gerenciamento de residências
-- Registro de leituras de medidores de água
-- Integração com ViaCEP para preenchimento automático de endereços
-- Controle de consumo de água
+Sistema desenvolvido para controle e monitoramento do consumo de água em residências, permitindo o cadastro de usuários, consulta automática de endereços via CEP e registro de leituras de medidores.
 
 ## 🚀 Tecnologias Utilizadas
 
-- **Java 17+**
-- **Spring Boot 3.x**
+- **Java 17**
+- **Spring Boot 3.3.11**
 - **Spring Data JPA**
-- **Spring Web**
 - **Spring Cloud OpenFeign**
+- **H2 Database** (Desenvolvimento)
+- **PostgreSQL** (Produção)
+- **SpringDoc OpenAPI** (Documentação)
 - **Lombok**
-- **H2 Database** (ou outro banco configurável)
 - **Maven**
 
-## 📦 Estrutura do Projeto
+## 🏗️ Arquitetura
 
 ```
-consumoaqua/
-├── src/
-│   └── main/
-│       └── java/
-│           └── br.com.thiago/
-│               ├── controller/
-│               │   ├── AquaController.java
-│               │   └── ResidenciaController.java
-│               ├── model/
-│               │   ├── Endereco.java
-│               │   ├── LeituraDoMedidor.java
-│               │   └── Residencia.java
-│               ├── repository/
-│               │   ├── LeituraDoMedidorRepository.java
-│               │   └── ResidenciaRepository.java
-│               ├── service/
-│               │   ├── impl/
-│               │   │   └── AquaServiceImpl.java
-│               │   ├── AguaService.java
-│               │   ├── ResidenciaService.java
-│               │   └── ViaCepService.java
-│               └── ConsumoAguaApplication.java
-├── resources/
-└── pom.xml
+src/
+├── main/
+│   ├── java/
+│   │   └── br.com.thiago/
+│   │       ├── controller/          # Controladores REST
+│   │       ├── dto/                # Objetos de Transferência de Dados
+│   │       ├── exception/          # Tratamento de exceções
+│   │       ├── model/              # Entidades JPA
+│   │       ├── repository/         # Interfaces de repositório
+│   │       └── service/            # Lógica de negócio
+│   └── resources/
+│       └── application.yml         # Configurações
+└── test/
 ```
 
-## 🛠️ Configuração e Instalação
+## 📊 Endpoints Principais
 
-### Pré-requisitos
-- Java 17 ou superior
-- Maven 3.6+
-- Git
-
-### Clone e Execução
-
-```bash
-# Clone o repositório
-git clone <url-do-repositorio>
-
-# Navegue até o diretório
-cd consumoaqua
-
-# Compile o projeto
-mvn clean compile
-
-# Execute a aplicação
-mvn spring-boot:run
-```
-
-A aplicação estará disponível em: `http://localhost:8080`
-
-## 📡 Endpoints da API
-
-### Residencias (`/api/residences`)
+### Residências (`/api/residencias`)
 
 | Método | Endpoint | Descrição |
 |--------|----------|-----------|
-| GET | `/api/residences` | Lista todas as residências |
-| GET | `/api/residences/{id}` | Busca residência por ID |
-| POST | `/api/residences` | Cria uma nova residência |
-| PUT | `/api/residences/{id}` | Atualiza uma residência |
-| DELETE | `/api/residences/{id}` | Remove uma residência |
+| POST | `/api/residencias` | Criar nova residência |
+| GET | `/api/residencias` | Listar todas as residências |
+| GET | `/api/residencias/{id}` | Buscar residência por ID |
+| PUT | `/api/residencias/{id}` | Atualizar residência |
+| DELETE | `/api/residencias/{id}` | Excluir residência |
 
 ### Água (`/api/agua`)
 
 | Método | Endpoint | Descrição |
 |--------|----------|-----------|
-| GET | `/api/agua` | Lista todas as residências |
-| GET | `/api/agua/{id}` | Busca residência por ID |
-| POST | `/api/agua` | Cria uma nova residência |
-| PUT | `/api/agua/{id}` | Atualiza uma residência |
-| DELETE | `/api/agua/{id}` | Remove uma residência |
+| POST | `/api/agua` | Criar registro de água |
+| GET | `/api/agua` | Listar todos os registros |
+| GET | `/api/agua/{id}` | Buscar registro por ID |
+| PUT | `/api/agua/{id}` | Atualizar registro |
+| DELETE | `/api/agua/{id}` | Excluir registro |
 
-## 📋 Modelos de Dados
+## 🔧 Configuração e Execução
 
-### Residencia
-```json
-{
-  "id": 1,
-  "nome": "João Silva",
-  "cpf": "123.456.789-00",
-  "email": "joao@email.com",
-  "telefone": "(11) 99999-9999",
-  "logradouro": "Rua das Flores",
-  "bairro": "Centro",
-  "cidade": "São Paulo",
-  "estado": "SP",
-  "cep": "01001-000",
-  "matricula": "12345",
-  "categoria": "Residencial",
-  "status": "Ativo",
-  "dataCadastro": "2024-01-15",
-  "ultimaLeituraData": "2024-01-15",
-  "ultimaLeituraConsumo": 150.5,
-  "ultimaLeituraMedidor": "A123"
-}
+### Pré-requisitos
+- Java 17
+- Maven 3.6+
+- PostgreSQL (para produção)
+
+### Execução Local
+
+1. **Clone o repositório**
+```bash
+git clone <repository-url>
+cd consumo-agua
 ```
 
-### LeituraDoMedidor
-```json
-{
-  "id": 1,
-  "residencia": {
-    "id": 1
-  },
-  "timestamp": "2024-01-15T10:30:00",
-  "consumption": 150.5
-}
+2. **Execute a aplicação**
+```bash
+mvn spring-boot:run
 ```
 
-## 🔌 Integração com ViaCEP
+3. **Acesse os endpoints**
+- API: http://localhost:8080
+- Swagger UI: http://localhost:8080/swagger-ui.html
+- H2 Console: http://localhost:8080/h2-console
 
-A aplicação integra-se automaticamente com o serviço ViaCEP para preencher os dados de endereço a partir do CEP informado.
+### Configurações
 
-## 🗃️ Banco de Dados
+**Desenvolvimento (dev):**
+- Banco: H2 em memória
+- DDL: update
+- SQL visível: true
 
-Por padrão, a aplicação utiliza o banco H2 em memória. Para configurar outro banco de dados, edite o arquivo `application.properties`:
+**Produção (prd):**
+- Banco: PostgreSQL
+- DDL: validate
+- SQL visível: false
 
-```properties
-# Exemplo para PostgreSQL
-spring.datasource.url=jdbc:postgresql://localhost:5432/consumoaqua
-spring.datasource.username=usuario
-spring.datasource.password=senha
-spring.jpa.hibernate.ddl-auto=update
+## 📡 Integrações
+
+### ViaCEP
+A API integra com o serviço ViaCEP para preenchimento automático de endereços:
+- Consulta de CEP em tempo real
+- Fallback para indisponibilidade do serviço
+- Validação de CEP existente
+
+## 🛡️ Tratamento de Exceções
+
+A aplicação possui tratamento centralizado de exceções:
+
+- `ResourceNotFoundException` - 404 Not Found
+- `BusinessException` - 400 Bad Request
+- `ViaCepException` - 503 Service Unavailable
+- `Exception` - 500 Internal Server Error
+
+## 📦 Deploy
+
+### Railway
+A aplicação está configurada para deploy no Railway:
+
+```toml
+[build]
+builder = "nixpacks"
+
+[build.environment]
+JAVA_VERSION = "17"
+
+[deploy]
+startCommand = "java -Dserver.port=$PORT -jar target/consumo-agua.jar"
 ```
+
+### Variáveis de Ambiente (Produção)
+
+| Variável | Descrição |
+|----------|-----------|
+| PGHOST | Host do PostgreSQL |
+| PGPORT | Porta do PostgreSQL |
+| PGDATABASE | Nome do banco de dados |
+| PGUSER | Usuário do PostgreSQL |
+| PGPASSWORD | Senha do PostgreSQL |
+| PORT | Porta da aplicação |
 
 ## 🧪 Testes
 
-Para executar os testes:
-
+Execute os testes com:
 ```bash
 mvn test
 ```
 
-## 📝 Licença
+## 📝 Exemplo de Uso
 
-Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+### Criar Residência
+```json
+POST /api/residencias
+{
+  "nome": "João Silva",
+  "cpf": "123.456.789-00",
+  "email": "joao@email.com",
+  "telefone": "(11) 99999-9999",
+  "cep": "01001000",
+  "matricula": "12345",
+  "categoria": "RESIDENCIAL",
+  "status": "ATIVO"
+}
+```
 
-## 🤝 Contribuição
+## 👨‍💻 Desenvolvedor
 
-Contribuições são sempre bem-vindas! Por favor, leia as diretrizes de contribuição antes de enviar um pull request.
+**Thiago Carvalho Ferrer** - Engenheiro de Software
 
 ---
 
-**Desenvolvido por Thiago**
+## 🔗 Links Úteis
+
+- [Documentação da API](http://localhost:8080/swagger-ui.html)
+- [Console H2](http://localhost:8080/h2-console)
+- [Railway Dashboard](https://railway.app)
+
+## 📄 Licença
+
+Este projeto está sob licença. Veja o arquivo LICENSE para mais detalhes.
