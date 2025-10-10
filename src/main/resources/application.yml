@@ -1,15 +1,55 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/consumoagua
-    username: postgres
-    password: sua_senha_aqui
-    driver-class-name: org.postgresql.Driver
+  profiles:
+    active: dev
+  application:
+    name: consumo-agua
 
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:h2:mem:consumoagua
+    username: consumoagua
+    password: ""
+    driver-class-name: org.h2.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
         format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: false
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prd
+  datasource:
+    url: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
+    username: ${PGUSER}
+    password: ${PGPASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+logging:
+  level:
+    br.com.thiago: DEBUG
+    org.hibernate.SQL: DEBUG

@@ -1,5 +1,13 @@
 [build]
-builder = "NIXPACKS"
+builder = "nixpacks"
 
-[env]
+[deploy]
+startCommand = "java -Dserver.port=$PORT -jar target/consumo-agua.jar"
+
+# Configurações específicas para Java/Maven
+[build.environment]
+JAVA_VERSION = "21"
+MAVEN_VERSION = "3.9"
+
+[environments.production]
 SPRING_PROFILES_ACTIVE = "prd"

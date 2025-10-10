@@ -114,12 +114,20 @@ public class ResidenciaService {
         try {
             if (residencia.getCep() != null && !residencia.getCep().isBlank()) {
                 ViaCepService.EnderecoViaCep endereco = viaCepService.consultarCep(residencia.getCep());
+
+                // CORREÇÃO: Validar se o CEP existe
+                if (endereco.erro != null) {
+                    throw new BusinessException("CEP não encontrado: " + residencia.getCep());
+                }
+
                 residencia.setLogradouro(endereco.logradouro);
                 residencia.setBairro(endereco.bairro);
                 residencia.setCidade(endereco.localidade);
                 residencia.setEstado(endereco.uf);
                 log.debug("Endereço preenchido pelo CEP: {}", residencia.getCep());
             }
+        } catch (BusinessException e) {
+            throw e;
         } catch (Exception e) {
             log.error("Erro ao consultar CEP: {}", residencia.getCep(), e);
             throw new ViaCepException("Erro ao consultar CEP: " + residencia.getCep(), e);
