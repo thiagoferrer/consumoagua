@@ -1,13 +1,11 @@
 [build]
 builder = "nixpacks"
+buildCommand = "mvn clean package -DskipTests"
 
 [deploy]
 startCommand = "java -Dserver.port=$PORT -jar target/consumo-agua.jar"
 
-# Configurações específicas para Java/Maven
-[build.environment]
-JAVA_VERSION = "21"
-MAVEN_VERSION = "3.9"
-
-[environments.production]
-SPRING_PROFILES_ACTIVE = "prd"
+# Configurações do Nixpacks
+[nixpacks]
+[nixpacks.build]
+baseImage = "ubuntu:22.04"
