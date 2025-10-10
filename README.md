@@ -84,12 +84,16 @@ mvn spring-boot:run
 - Swagger UI: http://localhost:8080/swagger-ui.html
 - H2 Console: http://localhost:8080/h2-console
 
-Interface Swagger:
-![Captura de tela_10-10-2025_172944_localhost.jpeg](../../../Users/thi-f/Downloads/Captura%20de%20tela_10-10-2025_172944_localhost.jpeg)
+🖥️ Interfaces e Acesso
+
+Interface Swagger
+![Captura de tela_10-10-2025_172944_localhost](https://github.com/user-attachments/assets/de06630c-9843-4011-a647-7865968acbbb)
+
 Console H2 Database
-![Captura de tela_10-10-2025_17295_localhost.jpeg](../../../Users/thi-f/Downloads/Captura%20de%20tela_10-10-2025_17295_localhost.jpeg)
+![Captura de tela_10-10-2025_17295_localhost](https://github.com/user-attachments/assets/5620ee4d-9d82-40c4-ba1c-d6661ea329ab)
+
 Dashboard Railway
-![Captura de tela_10-10-2025_172925_railway.com.jpeg](../../../Users/thi-f/Downloads/Captura%20de%20tela_10-10-2025_172925_railway.com.jpeg)
+![Captura de tela_10-10-2025_172925_railway com](https://github.com/user-attachments/assets/9ecad3be-d05a-41fa-af2d-6d7181d96d1f)
 
 ### Configurações
 
